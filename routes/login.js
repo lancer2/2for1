@@ -12,7 +12,7 @@ router.post('/', function(req, res, next) {
   }
   if(req.body.username==user.username&&req.body.password==user.password){
     req.session.user = user;
-    res.send(200);
+    res.render('index');
   }else{
     req.session.error = "用户名或密码不正确";
     res.send( 404 );
