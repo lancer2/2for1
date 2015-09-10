@@ -1,0 +1,47 @@
+<div class="container">
+
+
+    <section class="main">
+        <form id="loginf" class="loginform clearfix" action="login">
+            {{{ message}}}
+            <p>
+                <input type="text" id="username" name="username" placeholder="用户名">
+                <input type="password" name="password" id="password" placeholder="密码">
+            </p>
+            <button type="submit" name="submit">
+                <i class="icon-arrow-right"></i>
+                <span>登录</span>
+            </button>
+        </form></section>
+
+</div>
+<!-- jQuery if needed -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.bootcss.com/jquery-placeholder/2.1.2/jquery.placeholder.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+
+    $("#loginf").submit(function(e){
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var data = { "username": username, "password":password};
+        $.ajax({
+            url:'login',
+            type:'POST',
+            data:data,
+            success:function(data,status){
+                if(status == 'success'){
+                    location.href='index';
+                }
+            },
+            error:function(data,status,e){
+                if(status == "error"){
+                    location.href='login';
+                }
+            }
+    });
+    });
+
+</script>
