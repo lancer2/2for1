@@ -6,21 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var cloud = require('./routes/cloud');
-var login = require('./routes/login');
+var routes = require('./routes');
 
 var app = express();
 
 //过期时间
 app.use(session({
-  secret:'secret',
-  resave:true,
-  saveUninitialized:false,
-  cookie:{
-    maxAge:1000*60*10  //过期时间设置(单位毫秒)
-  }
+  secret:'secret'
 }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,29 +32,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // PS：注意，中间件的放置顺序很重要，等同于执行顺序。而且，中间件必须放在HTTP动词方法之前，否则不会执行。
 //注入session信息
 
-
-
-app.use('/', routes);
-app.use('/login', login);
-app.use('/users', users);
-app.use('/cloud', cloud);
-
-app.use(function(req, res, next){
-  res.locals.user = req.session.user;
-  var err = req.session.error;
-  res.locals.message = '';
-  if (err) res.locals.message = '<div style="margin-bottom: 20px;color:red;">' + err + '</div>';
-  next();
-});
-
-
-
-
+routes(app);//最佳
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('Not Found ??');
   err.status = 404;
   next(err);
 });

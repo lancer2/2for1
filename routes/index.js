@@ -1,14 +1,35 @@
-var express = require('express');
-var router = express.Router();
+module.exports = function(app){
 
 
-router.get('/', function(req, res, next) {
-  if(req.session.user){
-    res.render('index');
-  }else{
-    req.session.error = "请先登录"
-    res.redirect('login');
-  }
-});
+  app.get('/', function(req, res, next) {
+    if(req.session.user){
+      res.render('index',{'user':req.session.user});
+    }else{
+      req.session.error = "请先登录 form /";
+      res.render('login',{'error':req.session.error});
+    }
+  });
+  app.get('/:hbs',function(req,res){ if(req.session.user){
+      res.render(req.params.hbs,{'user':req.session.user});
+    }else{
+      req.session.error = "请先登录 from /:hbs";
+      res.render('login',{'error':req.session.error});
+    }
+  });
 
-module.exports = router;
+  app.post('/login', function(req, res) {
+    var user={
+      username:'admin',
+      password:'admin'
+    }
+    if(req.body.username==user.username&&req.body.password==user.password){
+      req.session.user = user;
+      //取消layout
+      console.log('=======post:'+user.username);
+      res.send(200);
+    }else{
+      req.session.error = "用户名或密码不正确";
+      res.send( 404 );
+    }
+  });
+};

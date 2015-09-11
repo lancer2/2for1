@@ -2,8 +2,8 @@
 
 
     <section class="main">
-        <form id="loginf" class="loginform clearfix" action="login">
-            {{{ message}}}
+        <form id="loginf" class="loginform clearfix" method="post">
+            <h2>{{error}}</h2>
             <p>
                 <input type="text" id="username" name="username" placeholder="用户名">
                 <input type="password" name="password" id="password" placeholder="密码">
