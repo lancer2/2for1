@@ -5,14 +5,14 @@ module.exports = function(app){
     if(req.session.user){
       res.render('index',{'user':req.session.user});
     }else{
-      req.session.error = "请先登录 form /";
+      req.session.error = "Error:请先登录!";
       res.render('login',{'error':req.session.error});
     }
   });
   app.get('/:hbs',function(req,res){ if(req.session.user){
       res.render(req.params.hbs,{'user':req.session.user});
     }else{
-      req.session.error = "请先登录 from /:hbs";
+      req.session.error = "Error:请先登录!";
       res.render('login',{'error':req.session.error});
     }
   });
