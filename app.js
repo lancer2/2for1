@@ -11,6 +11,8 @@ var app = express();
 
 //过期时间
 app.use(session({
+    resave:false,
+    saveUninitialized:false,
     secret: 'secret'
 }));
 
